@@ -19,6 +19,14 @@ class EmployeeController{
                     "success"=> false,
                     "text"=> "Veuillez indiquer un nom d'utilisateur entre 1 et 50 caractères"
                 ];
+            }else{
+                // verif que le nom utilisateur soit pas en doublon
+                if(Employee::readOne($_POST["username"]) != false){
+                    $messages[] = [
+                        "success"=> false,
+                        "text"=> " Ce nom d'utilisateur est déjà pris"
+                    ];
+                }
             }
 
             //verif mot de passe
@@ -62,7 +70,57 @@ class EmployeeController{
 
     //Methode de connexion
     public function signIn(): array{
+        $messages = [];
 
+        if(isset($_POST["submit"])){
+
+            if(!isset($_POST["username"])){
+                $messages [] = [
+                    "success" => false,
+                    "text" => "Indiquer un nom d'utilisateur"
+                ];
+            }
+
+            if(!isset($_POST["password"])){
+                $messages [] = [
+                    "success" => false,
+                    "text" => "Indiquer un mot de passe"
+                ];
+            }
+
+            if(count($messages) ==0 ){
+                $employee = Employee::readOne($_POST["username"]);
+
+                if($employee == false){
+                    $messages [] = [
+                        "success" => false,
+                        "text" => "Aucun employé avec ce nom trouvé"
+                    ];
+                }
+                else{
+                    if(!password_verify($_POST["password"], $employee->password)){
+                        $messages [] = [
+                            "success" => false,
+                            "text" => "mot de passe incorrecte"
+                        ];
+                    }
+                    else{
+                        $messages [] = [
+                            "success" => true,
+                            "text" => "Vous etes connecté."
+                        ];
+
+                        $_SESSION["username"] = $_POST["username"];
+
+                        //on peux faire une redirection
+                        header("location: /index.php");
+                    }
+                }
+            }
+        }
+
+
+        return $messages;
     }
 
 }
