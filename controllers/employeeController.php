@@ -113,7 +113,7 @@ class EmployeeController{
                         $_SESSION["username"] = $_POST["username"];
 
                         //on peux faire une redirection
-                        header("location: /index.php");
+                        header("Location: /index.php");
                     }
                 }
             }
@@ -121,6 +121,14 @@ class EmployeeController{
 
 
         return $messages;
+    }
+
+    //methode qui verifie si l'employer est connecté
+    public function verifyLogin(): void {
+        if(!isset($_SESSION["username"])){
+            $_SESSION["message"] = "Merci de vous connecter pour accéder à ce contenu";
+            header("Location: /connexion.php");
+        }
     }
 
 }
