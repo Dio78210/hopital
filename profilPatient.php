@@ -1,22 +1,22 @@
 <?php
 session_start();
 
-define("TITLE","Creer un patient");
+define("TITLE","informations des patients");
 
 
 //controller
 require_once(__DIR__."/controllers/PatientController.php");
+
 require_once(__DIR__."/controllers/employeeController.php");
 
-
-$employeeController = new EmployeeController;
 $patientController = new PatientController;
-
-$messages = $patientController->ajoutPatient();
+$employeeController = new EmployeeController;
 $employeeController->verifyLogin();
 
+$patients = $patientController->readOnePatient();
+
 include(__DIR__."/assets/inc/header.php");
-include(__DIR__."/views/ajoutPatient.php");
+include(__DIR__."/views/profilPatient.php");
 include(__DIR__."/assets/inc/footer.php");
 
 

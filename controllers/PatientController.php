@@ -12,7 +12,7 @@ class PatientController{
         if(isset($_POST["submit"])){
 
             //verif nom d'utilisateur
-            if(!isset($_POST["lastname"])|| strlen($_POST["lastname"]) == 0 ){
+            if(!isset($_POST["lastname"]) || strlen($_POST["lastname"]) == 0 ){
                 $messages[] = [
                     "success"=> false,
                     "text"=> "Veuillez indiquer un nom d'utilisateur"
@@ -47,7 +47,7 @@ class PatientController{
             }
 
             //verificaton numeros de telephone
-            if (!isset($_POST['phone']) || !preg_match("@(0|\+33|0033)[1-9][0-9]{8}@", $_POST["phone"])) {
+            if (!isset($_POST['phone']) || !preg_match("@(0|\+33|0033)[1-7][0-9]{8}@", $_POST["phone"])) {
                 $messages[] = [
                     "success"=> false,
                     "text"=> "Numéro de téléphone incorrect"
@@ -76,6 +76,36 @@ class PatientController{
             }
         }
         return $messages;
+    }
+
+    public function readAllListePatients(): array{
+            $listePatients = Patients::readAll();
+            return $listePatients;
+    }
+
+
+    public function readOnePatient(): Patients{
+
+        //verification des informations envoyées par l'utilisateur
+        if (!isset($_GET["id"])) {
+            echo "veuillez indiquer l'id d'un patient à afficher";
+            die;
+        } elseif (!is_numeric($_GET["id"])) {
+            echo "l'id du patient à afficher doit etre un nombre";
+            die;
+        } else {
+            $id = $_GET["id"];
+
+            $patient = Patients::readOne($id);
+
+            if ($patient == false) {
+                    echo "Aucun patient n'a été trouvé avec l'ID" . $id;
+                    die;
+            }
+
+            return $patient;
+        }
+
     }
 
 }
