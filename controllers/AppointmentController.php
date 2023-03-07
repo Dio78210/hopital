@@ -47,4 +47,13 @@ class AppointmentController{
         }
         return $messages;
     }
+
+    public function readAllRendezVous(): array{
+        $appointments = Appointments::readAll();
+        return $appointments;
+    }
+
+
+
+
 }

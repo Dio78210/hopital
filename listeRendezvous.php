@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-define("TITLE","Creer un rendez-vous");
+define("TITLE","Liste des rendez-vous");
 
 
 //controller
@@ -17,11 +17,12 @@ $appointmentController = new AppointmentController;
 
 $messages = $appointmentController->appointment();
 $patients = $patientController->readAllListePatients();
+$appointments = $appointmentController->readAllRendezVous();
 $employeeController->verifyLogin();
 
 
 include(__DIR__."/assets/inc/header.php");
-include(__DIR__."/views/ajoutRendezvous.php");
+include(__DIR__."/views/listeRendezvous.php");
 include(__DIR__."/assets/inc/footer.php");
 
 

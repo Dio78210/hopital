@@ -22,7 +22,7 @@
                 <option value="" disabled hidden selected >--Faite un choix--</option>
                 <?php
                 foreach ($patients as $patient) { ?>
-                    <option value="<?= $patient->id?>"><?= $patient->lastname?><?= $patient->firstname?></option>
+                    <option value="<?= $patient->id?>"><?= $patient->lastname?> <?= $patient->firstname?></option>
 
                 <?php } ?>
             </select>

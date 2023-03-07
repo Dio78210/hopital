@@ -36,7 +36,8 @@ class Appointments{
     public static function readAll(){
         global $pdo;
 
-        $sql = "SELECT * FROM appointments";
+        $sql = "SELECT * FROM appointments
+                ORDER BY dateHour";
         
         $statement = $pdo->prepare($sql);
         $statement->execute();
@@ -48,7 +49,7 @@ class Appointments{
             $idPatients = $appointment->idPatients;
 
             $sql = "SELECT * FROM patients
-                    WHERE id = :idPatients ";
+                    WHERE id = :idPatients";
 
             $statement = $pdo->prepare($sql);
             $statement->bindParam(":idPatients", $idPatients, PDO::PARAM_INT);
@@ -61,6 +62,19 @@ class Appointments{
 
         return $appointments;
 
+    }
+
+    public function pastDate(){
+
+        $dateHour = new DateTime($this->dateHour);
+        $dateNow = new DateTime();
+
+        if(!isset($this->dateHour) || $dateHour < $dateNow ){
+                echo '<i class="bi bi-bell-slash-fill"></i>';
+            }
+            else{
+                echo '<i class="bi bi-bell-fill"></i>';
+            }
     }
 
 }
