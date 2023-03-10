@@ -14,6 +14,7 @@
                 <td><?= $appointment->patient->firstname ?></td>
                 <td><?= $appointment->dateHour?></td>
                 <td><?= $appointment->pastDate()?></td>
+                <td><a href="/rendezvous.php?id=<?= $appointment->id?>">Voir les infos</a></td>
             </tr>
         <?php
         }

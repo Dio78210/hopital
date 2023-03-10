@@ -18,6 +18,8 @@ $appointmentController = new AppointmentController;
 $messages = $appointmentController->appointment();
 $patients = $patientController->readAllListePatients();
 $appointments = $appointmentController->readAllRendezVous();
+
+
 $employeeController->verifyLogin();
 
 

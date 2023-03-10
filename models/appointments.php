@@ -33,6 +33,51 @@ class Appointments{
         $statement->execute();
     }
 
+    public static function update(int $id,string $dateHour, int $idPatients){
+        global $pdo;
+
+        $sql = "UPDATE appointments
+                SET dateHour = :dateHour,
+                idPatients = :idPatients
+                WHERE id = :id";
+
+        $statement = $pdo->prepare($sql);
+
+        $statement->bindParam(":dateHour", $dateHour, PDO::PARAM_STR);
+        $statement->bindParam(":idPatients", $idPatients, PDO::PARAM_INT);
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        
+    }
+
+    public static function readOneRDV(int $id): Appointments|false{
+        global $pdo;
+
+        $sql = "SELECT * FROM appointments
+                WHERE id = :id";
+        
+        $statement = $pdo->prepare($sql);
+    
+        //protection contre les injections SQL
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+    
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, "Appointments");
+        $appointment = $statement->fetch();
+
+        if($appointment == false)  {
+            return false;
+        } else {
+            $patient = Patients::readOne($appointment->idPatients);
+
+            $appointment->patient = $patient;   
+        }
+
+        return $appointment;
+    }
+
     public static function readAll(){
         global $pdo;
 

@@ -6,15 +6,16 @@ define("TITLE","informations des patients");
 
 //controller
 require_once(__DIR__."/controllers/PatientController.php");
+$patientController = new PatientController;
+$messages = $patientController->modifierPatient();
+$patients = $patientController->readOnePatient();
+
 
 require_once(__DIR__."/controllers/employeeController.php");
-
-$patientController = new PatientController;
 $employeeController = new EmployeeController;
 $employeeController->verifyLogin();
 
-$messages = $patientController->modifierPatient();
-$patients = $patientController->readOnePatient();
+
 
 
 include(__DIR__."/assets/inc/header.php");

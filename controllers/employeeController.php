@@ -119,7 +119,6 @@ class EmployeeController{
             }
         }
 
-
         return $messages;
     }
 
