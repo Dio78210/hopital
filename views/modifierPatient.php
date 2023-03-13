@@ -11,7 +11,7 @@
     }
 ?>
 
-<h1>Modifier les infos du patient</h1>
+<h1 class="text-center m-5">Modifier les infos du patient</h1>
 
 <form action="#" method="post">
 
@@ -30,6 +30,6 @@
     <label for="mail">Email</label>
     <input type="email" name="mail" id="mail" class="form-control" value="<?= $patients->mail ?>">
 
-    <input type="submit" name="submit" value="Modifier" class="btn btn-success">
+    <input type="submit" name="submit" value="Modifier" class="btn btn-success mt-5">
 
 </form>

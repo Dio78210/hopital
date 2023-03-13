@@ -1,5 +1,11 @@
 <table class="table caption-top">
-    <caption class="text-center mb-5">Liste des patients</caption>
+    <h1 class="text-center mb-5">Liste des patients</h1>
+
+    <form action="#" method="get">
+        <input type="search" name="recherche" id="recherche" placeholder="Rechercher un patient" class="mb-4">
+        <button type="submit" name="rechercher" class="btn btn-success m-2">Rechercher</button>
+    </form>
+
     <thead>
         <tr>
             <th scope="col">Lastname</th>

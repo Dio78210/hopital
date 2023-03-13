@@ -1,5 +1,5 @@
 <table class="table caption-top">
-    <caption class="text-center mb-5">Liste des Rendez-vous</caption>
+    <h1 class="text-center mb-5">Liste des Rendez-vous</h1>
     <thead>
         <tr>
             <th scope="col">Lastname</th>
@@ -15,6 +15,7 @@
                 <td><?= $appointment->dateHour?></td>
                 <td><?= $appointment->pastDate()?></td>
                 <td><a href="/rendezvous.php?id=<?= $appointment->id?>">Voir les infos</a></td>
+                <td><a href="/suppressionRendezVous.php?id=<?= $appointment->id?>">Supprimer le rendez-vous</a></td>
             </tr>
         <?php
         }

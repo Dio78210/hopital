@@ -90,9 +90,38 @@ class Patients{
         $statement->execute();
     }
 
+    public static function rechercherPatient(): array{
+        
+        global $pdo;
 
+        $rechercher = '%'.$_GET["recherche"].'%';
+        $sql = "SELECT * FROM patients
+                WHERE lastname LIKE :rechercher
+                OR firstname LIKE :rechercher";
 
+        $statement = $pdo->prepare($sql);
 
+        $statement->bindParam(":rechercher", $rechercher, PDO::PARAM_STR);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, "Patients");
+        $patients = $statement->fetchAll();
+
+        return $patients;
+
+    }
+
+    public static function deletePatient(int $id){
+
+        global $pdo;
+
+        $sql = "DELETE FROM patients WHERE id = :id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+
+    }
+
+    
 
 
 

@@ -119,5 +119,30 @@ class AppointmentController{
         return $messages;
     }
 
+    public function readForPatientValidate(): array{
+
+        $id = $_GET["id"];
+
+        $appointments = Appointments::readForPatient($id);
+
+        return $appointments;
+    }
+
+    public function deleteRendezVous(){
+        if (!isset($_GET["id"])) {
+                echo "Veuillez renseigner un ID du rendez-vous";
+                die;
+        }
+        if (!is_numeric($_GET["id"])) {
+                echo "L'ID renseigné doit être numerique";
+                die;
+        }
+
+        $id = $_GET["id"];
+        Appointments::delete($id);
+    }
+
+    
+
 
 }

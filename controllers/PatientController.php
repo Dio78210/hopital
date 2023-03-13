@@ -79,8 +79,12 @@ class PatientController{
     }
 
     public function readAllListePatients(): array{
-            $listePatients = Patients::readAll();
-            return $listePatients;
+        if(isset($_GET["recherche"])){
+            $patients = Patients::rechercherPatient();
+        }else{
+            $patients = Patients::readAll();
+        }
+            return $patients;
     }
 
 
@@ -102,11 +106,10 @@ class PatientController{
                     echo "Aucun patient n'a été trouvé avec l'ID" . $id;
                     die;
             }
-
             return $patient;
         }
-
     }
+
 
     public function modifierPatient(){
         $messages = [];
@@ -181,6 +184,23 @@ class PatientController{
         }
         return $messages;
     }
+
+
+    public function deletePatient():void{
+        if (!isset($_GET["id"])) {
+                echo "Veuillez renseigner un ID du patient";
+                die;
+        }
+        if (!is_numeric($_GET["id"])) {
+                echo "L'ID renseigné doit être numerique";
+                die;
+        }
+
+        $id = $_GET["id"];
+        Patients::deletePatient($id);
+    }
+
+
 
 
 }

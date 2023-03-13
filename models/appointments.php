@@ -78,6 +78,39 @@ class Appointments{
         return $appointment;
     }
 
+    public static function readForPatient(int $idPatients): array{
+        global $pdo;
+
+        $sql = "SELECT id, dateHour, idPatients FROM appointments
+                WHERE idPatients = :idPatients";
+        
+        $statement = $pdo->prepare($sql);
+    
+        //protection contre les injections SQL
+        $statement->bindParam(":idPatients", $idPatients, PDO::PARAM_INT);
+    
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, "Appointments");
+        $appointments = $statement->fetchAll();
+
+        $sql = "SELECT * FROM patients
+                WHERE id = :idPatients";
+
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(":idPatients", $idPatients, PDO::PARAM_INT);
+
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, "Patients");
+        $patient = $statement->fetch();
+
+        foreach($appointments as $appointment){
+
+        $appointment->patient = $patient;
+        }
+
+        return $appointments;
+    }
+
     public static function readAll(){
         global $pdo;
 
@@ -121,5 +154,15 @@ class Appointments{
                 echo '<i class="bi bi-bell-fill"></i>';
             }
     }
+
+    public static function delete(int $id){
+        global $pdo;
+
+        $sql = "DELETE FROM appointments WHERE id = :id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();  
+    }
+
 
 }
