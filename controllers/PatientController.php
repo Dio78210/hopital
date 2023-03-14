@@ -82,7 +82,7 @@ class PatientController{
         if(isset($_GET["recherche"])){
             $patients = Patients::rechercherPatient();
         }else{
-            $patients = Patients::readAll();
+            $patients = $this->paginationPatients();
         }
             return $patients;
     }
@@ -198,6 +198,35 @@ class PatientController{
 
         $id = $_GET["id"];
         Patients::deletePatient($id);
+    }
+
+
+    public function paginationPatients(){
+
+        $currentPage = $this->paginationCurrent();
+
+        $patients = Patients::paginationPage($currentPage, 10);
+
+        return $patients;
+    }
+
+
+    public function paginationCurrent(){
+        if(isset($_GET['page']) && !empty($_GET['page'])){
+            $currentPage = (int) strip_tags($_GET['page']);
+        }else{
+            $currentPage = 1;
+        }
+        return $currentPage;
+    }
+
+
+
+    public function paginationNb(){
+
+        $nbPage = Patients::paginationCount(10);
+
+        return $nbPage;
     }
 
 

@@ -121,7 +121,38 @@ class Patients{
 
     }
 
-    
+    public static function paginationCount(int $parPage){
+        global $pdo;
+
+        $sql = "SELECT COUNT(*) AS nb_patients FROM patients";
+        $statement = $pdo->prepare($sql);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $patients = $statement->fetch();
+
+        $nbPatients = (int) $patients['nb_patients'];
+        $pages = ceil($nbPatients / $parPage);
+
+        return $pages;
+    }
+
+    public static function paginationPage(int $currentPage, int $parPage ){
+        global $pdo;
+
+        $premier = ($currentPage * $parPage) - $parPage;
+
+        $sql = "SELECT * FROM patients ORDER BY id ASC LIMIT :premier, :parpage;";
+
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(":premier", $premier, PDO::PARAM_INT);
+        $statement->bindParam(":parpage", $parPage, PDO::PARAM_INT);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, "Patients");
+        $patients = $statement->fetchAll();
+
+        return $patients;
+
+    }
 
 
 
