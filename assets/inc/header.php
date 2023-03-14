@@ -23,7 +23,7 @@
                     <div class="navbar-nav">
                         <a class="nav-link" href="/index.php">Accueil</a>
                         <a class="nav-link" href="/ajoutPatient.php">Ajouter un nouveau patient</a>
-                        <a class="nav-link" href="/listePatients.php">Liste des patients</a>
+                        <a class="nav-link" href="/patients">Liste des patients</a>
                         <a class="nav-link" href="/ajoutRendezvous.php" >Ajouter un Rendez-vous</a>
                         <a class="nav-link" href="/listeRendezvous.php" >Liste des Rendez-vous</a>
                     </div>

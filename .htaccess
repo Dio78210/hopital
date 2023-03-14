@@ -1,0 +1,7 @@
+# activation de le reecriture URL
+RewriteEngine On
+
+# ecriture du chemin du fichier URL
+RewriteRule ^patients/*$ listePatients.php [L]
+RewriteRule ^patients/([0-9]+)/*$ listePatients.php?page=$1 [L]
+
